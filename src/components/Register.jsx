@@ -1,4 +1,6 @@
 import React from "react";
+import { FaUserPlus } from "react-icons/fa";
+
 
 const Register = () => {
   return (
@@ -21,22 +23,40 @@ const Register = () => {
             type="text"
             className="border border-green-200
           w-full p-2 rounded-md bg-[#01aa851d] text-[#004939f3] mb-3
-          font-medium outline-none placeholder:text-[#00493958]" placeholder="Full Name"
+          font-medium outline-none placeholder:text-[#00493958]"
+            placeholder="Full Name"
           />
 
           <input
             type="email"
             className="bordee border-green-200
           w-full p-2 rounded-md bg-[#01aa851d] text-[#004939f3] mb-3
-          font-medium outline-none placeholder:text-[#00493958]" placeholder="Email"
+          font-medium outline-none placeholder:text-[#00493958]"
+            placeholder="Email"
           />
 
           <input
             type="password"
             className="bordee border-green-200
           w-full p-2 rounded-md bg-[#01aa851d] text-[#004939f3] mb-3
-          font-medium outline-none placeholder:text-[#00493958]" placeholder="Password"
+          font-medium outline-none placeholder:text-[#00493958]"
+            placeholder="Password"
           />
+        </div>
+
+        <div className="w-full">
+          <button
+            className="bg-[#01aa85] text-white 
+          font-bold w-full p-2 rounded-md 
+          flex items-center gap-2 justify-center
+          "
+          >
+            Register <FaUserPlus />
+          </button>
+        </div>
+
+        <div className="mt-5 text-center text-gray-400 text-sm">
+          <button>Already have an account? Sign In</button>
         </div>
       </div>
     </section>

@@ -9,11 +9,11 @@ import Register from "./components/Register";
 const App = () => {
   return (
     <div>
-      {/* <Navlinks />
-      <Login /> */}
-      <Register />
-      {/* <Chatbox />
-      <Chatlist /> */}
+      {/* <Navlinks /> */}
+      <Login />
+      {/* <Register /> */}
+      {/* <Chatbox /> */}
+      {/* <Chatlist /> */}
     </div>
   ); 
 };
