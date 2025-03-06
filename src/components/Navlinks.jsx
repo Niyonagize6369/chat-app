@@ -1,4 +1,12 @@
 import React from "react";
+import {
+  RiArrowDownSFill,
+  RiBardLine,
+  RiChatAiLine,
+  RiFile4Line,
+  RiFolderUserLine,
+  RiNotificationLine,
+} from "react-icons/ri";
 // import logo from "../../public/assets/logo.png";
 const logo = "/assets/logo.png";
 
@@ -26,6 +34,41 @@ const Navlinks = () => {
             />
           </span>
         </div>
+        <ul
+          className="flex lg:flex-col flex-row items-center gap-7 md:gap-10
+        px-2 md:px-0"
+        >
+          <li>
+            <button className="lg:text-[28px] text-[22px]">
+              <RiChatAiLine color="#fff" />
+            </button>
+          </li>
+          <li>
+            <button className="lg:text-[28px] text-[22px]">
+              <RiFolderUserLine color="#fff" />
+            </button>
+          </li>
+          <li>
+            <button className="lg:text-[28px] text-[22px]">
+              <RiNotificationLine color="#fff" />
+            </button>
+          </li>
+          <li>
+            <button className="lg:text-[28px] text-[22px]">
+              <RiFile4Line color="#fff" />
+            </button>
+          </li>
+          <li>
+            <button className="lg:text-[28px] text-[22px]">
+              <RiBardLine color="#fff" />
+            </button>
+          </li>
+          <li>
+            <button className="lg:text-[28px] text-[22px]">
+              <RiArrowDownSFill color="#fff" />
+            </button>
+          </li>
+        </ul>
       </main>
     </section>
   );
