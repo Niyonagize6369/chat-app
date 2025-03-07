@@ -6,6 +6,7 @@ import {
   RiFile4Line,
   RiFolderUserLine,
   RiNotificationLine,
+  RiShutDownLine,
 } from "react-icons/ri";
 // import logo from "../../public/assets/logo.png";
 const logo = "/assets/logo.png";
@@ -39,36 +40,40 @@ const Navlinks = () => {
         px-2 md:px-0"
         >
           <li>
-            <button className="lg:text-[28px] text-[22px]">
+            <button className="lg:text-[28px] text-[22px] cursor-pointer">
               <RiChatAiLine color="#fff" />
             </button>
           </li>
           <li>
-            <button className="lg:text-[28px] text-[22px]">
+            <button className="lg:text-[28px] text-[22px] cursor-pointer">
               <RiFolderUserLine color="#fff" />
             </button>
           </li>
           <li>
-            <button className="lg:text-[28px] text-[22px]">
+            <button className="lg:text-[28px] text-[22px] cursor-pointer">
               <RiNotificationLine color="#fff" />
             </button>
           </li>
           <li>
-            <button className="lg:text-[28px] text-[22px]">
+            <button className="lg:text-[28px] text-[22px] cursor-pointer">
               <RiFile4Line color="#fff" />
             </button>
           </li>
           <li>
-            <button className="lg:text-[28px] text-[22px]">
+            <button className="lg:text-[28px] text-[22px] cursor-pointer">
               <RiBardLine color="#fff" />
             </button>
           </li>
           <li>
-            <button className="lg:text-[28px] text-[22px]">
-              <RiArrowDownSFill color="#fff" />
+            <button className="lg:text-[28px] text-[22px] cursor-pointer">
+              <RiShutDownLine color="#fff" />
             </button>
           </li>
         </ul>
+
+        <button className="block lg:hiddenlg:text-[28px] text-[22px] cursor-pointer">
+          <RiArrowDownSFill color="#fff" />
+        </button>
       </main>
     </section>
   );

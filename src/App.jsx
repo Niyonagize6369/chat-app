@@ -14,8 +14,8 @@ const App = () => {
       w-[100%]"
       >
         <Navlinks />
-        <Chatbox />
         <Chatlist />
+        <Chatbox />
       </div>
 
       <div className="hidden">
