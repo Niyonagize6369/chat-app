@@ -31,7 +31,7 @@ const Navlinks = () => {
               src={logo}
               className="w-[56px] h-[52px] object-contain bg-white
               rounded-lg p-2"
-              alt=""
+              alt="logo"
             />
           </span>
         </div>
@@ -71,7 +71,7 @@ const Navlinks = () => {
           </li>
         </ul>
 
-        <button className="block lg:hiddenlg:text-[28px] text-[22px] cursor-pointer">
+        <button className="block lg:hidden lg:text-[28px] text-[22px] cursor-pointer">
           <RiArrowDownSFill color="#fff" />
         </button>
       </main>

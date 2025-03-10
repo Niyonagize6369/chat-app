@@ -16,6 +16,7 @@ const App = () => {
         <Navlinks />
         <Chatlist />
         <Chatbox />
+        {/* <SearchModal /> */}
       </div>
 
       <div className="hidden">
