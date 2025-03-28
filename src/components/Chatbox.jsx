@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { messageData } from "../data/messageData";
 
@@ -8,10 +8,17 @@ const Chatbox = () => {
   const [messages, setMessages] = useState([]); // ✅ Corrected state variable
   const [messageText, setMessageText] = useState("");
   const senderEmail = "baxo@mailinator.com";
+  const scrollref = useRef(null);
 
   useEffect(() => {
     setMessages(messageData);
   }, []);
+
+  useEffect(() => {
+    if (scrollref.current) {
+      scrollref.current.scrollTop = scrollref.current.scrollHeight;
+    }
+  }, [messages]);
 
   const sortedMessages = useMemo(() => {
     return [...messages].sort((a, b) => {
@@ -56,7 +63,10 @@ const Chatbox = () => {
       </header>
 
       {/* Chat Messages */}
-      <main className="flex flex-col flex-grow overflow-y-auto p-4 space-y-4">
+      <main
+        ref={scrollref}
+        className="flex flex-col flex-grow overflow-y-auto p-4 space-y-4"
+      >
         {sortedMessages.map((msg, index) => {
           // Convert timestamp to a readable date
           const messageDate = new Date(
