@@ -1,118 +1,93 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { RiMore2Fill } from "react-icons/ri";
 import SearchModal from "./SearchModal";
-
-const defaultAvatar = "/assets/default.jpg"; // Define the variable
+import chatData from "../data/chats";
+import { formatTimestamp } from "../utils/formatTimestamp";
+import defaultAvatar from "/assets/default.jpg"; // Ensure this path is correct
 
 const ChatList = () => {
+  const [chats, setChats] = useState([]);
+
+  useEffect(() => {
+    setChats(chatData);
+  }, []);
+
+  const sortedchats = useMemo(() => {
+    return [...chats].sort((a, b) => {
+      const aTimestamp =
+        (a?.lastMessageTimestamp?.seconds || 0) +
+        (a?.lastMessageTimestamp?.nanoseconds || 0) / 1e9;
+      const bTimestamp =
+        (b?.lastMessageTimestamp?.seconds || 0) +
+        (b?.lastMessageTimestamp?.nanoseconds || 0) / 1e9;
+
+      return bTimestamp - aTimestamp;
+    });
+  }, [chats]);
+
   return (
-    <section
-      className="relative hidden lg:flex flex-col items-start
-    justify-start bg-white h-[100vh] w-[100%] md:w-[600px]"
-    >
-      <header
-        className="flex items-center justify-between w-full
-      lg:border-b-[1px] border-[#898989b9] p-4 sticky
-      md:static top-0 z-[100]"
-      >
-        <main className="flex items-center gap-3">
+    <section className="relative hidden lg:flex flex-col bg-white h-screen w-[600px] border-r border-gray-300">
+      {/* Header */}
+      <header className="flex items-center justify-between w-full border-b border-gray-300 p-4 sticky top-0 bg-white z-10">
+        <div className="flex items-center gap-3">
           <img
             src={defaultAvatar}
-            className="w-[44px] h-[44px] object-cover rounded-full"
-            alt=""
+            className="w-12 h-12 object-cover rounded-full"
+            alt="User avatar"
           />
-          <span>
-            <h3
-              className="text-lg font-semibold p-0 text-[#2A3D39]
-            md:text-[17px]"
-            >
-              ChatApp User
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800">
+              Chatfrik User
             </h3>
-            <p className="p-0 font-light text-[#2A3D39] text-[15px]">
-              @chatApp
-            </p>
-          </span>
-        </main>
-        <button
-          className="bg-[#D9F2ED] w-[35px] h-[35px] p-2 flex items-center justify-center
-        rounded-lg"
-        >
-          <RiMore2Fill color="[#01AA85]" className="w-[28px] h-[28px]" />
+            <p className="text-sm text-gray-500">@chatApp</p>
+          </div>
+        </div>
+        <button className="bg-gray-100 p-2 rounded-lg hover:bg-gray-200">
+          <RiMore2Fill className="w-6 h-6 text-gray-600" />
         </button>
       </header>
-      <div className="w-[100%] mt-[10px] px-5">
-        <header className="flex items-center justify-between">
-          <h3 className="text-[16px]">Messages ({0})</h3>
+
+      {/* Search & Messages Title */}
+      <div className="w-full px-5 mt-3">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-medium text-gray-700">
+            Messages ({chats?.length || 0})
+          </h3>
           <SearchModal />
-        </header>
+        </div>
       </div>
-      <main className="flex flex-col items-start mt-[1.5rem] pb-3">
-        <button
-          className="flex items-start justify-between w-[190%]
-        border-b border-[#9090902c] px-5 pb-2 pt-2"
-        >
-          <div className="flex items-start gap-3">
-            <img
-              src={defaultAvatar}
-              className="h-[40px] w-[40px] rounded-full
-            object-cover"
-              alt=""
-            />
-            <span>
-              <h2
-                className="p-0 font-semibold text-[#2A3d39]
-              text-left text-[17px]"
+
+      {/* Chat List */}
+      <main className="flex flex-col mt-4 pb-3 overflow-y-auto w-full">
+        {sortedchats.map((chat) =>
+          chat?.users
+            ?.filter((user) => user?.email !== "baxo@mailinator.com")
+            ?.map((user) => (
+              <button
+                key={`${chat?.uid}-${user?.email}`}
+                className="flex items-center justify-between w-full px-5 py-3 hover:bg-gray-100 transition-all border-b border-gray-200"
               >
-                Rachel Niyonagize
-              </h2>
-              <p
-                className="p-0 font-light text-[#2A3d39]
-              text-left text-[14px]"
-              >
-                Hey there, How are you?
-              </p>
-            </span>
-          </div>
-          <p
-            className="p-0 font-regular text-gray-400
-              text-left text-[11px]"
-          >
-            6th February, 2025
-          </p>
-        </button>
-        <button
-          className="flex items-start justify-between w-[190%]
-        border-b border-[#9090902c] px-5 pb-2 pt-2"
-        >
-          <div className="flex items-start gap-3">
-            <img
-              src={defaultAvatar}
-              className="h-[40px] w-[40px] rounded-full
-            object-cover"
-              alt=""
-            />
-            <span>
-              <h2
-                className="p-0 font-semibold text-[#2A3d39]
-              text-left text-[17px]"
-              >
-                Rachel Niyonagize
-              </h2>
-              <p
-                className="p-0 font-light text-[#2A3d39]
-              text-left text-[14px]"
-              >
-                Hey there, How are you?
-              </p>
-            </span>
-          </div>
-          <p
-            className="p-0 font-regular text-gray-400
-              text-left text-[11px]"
-          >
-            6th February, 2025
-          </p>
-        </button>
+                <div className="flex items-center gap-3">
+                  <img
+                    src={defaultAvatar}
+                    className="h-10 w-10 rounded-full object-cover"
+                    alt="User avatar"
+                  />
+                  <div className="text-left">
+                    <h2 className="font-semibold text-gray-800 text-md">
+                      {user?.fullname || "Rachel Niyonagize"}
+                    </h2>
+                    <p className="text-sm text-gray-500 truncate w-48">
+                      {chat?.lastMessage}
+                    </p>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-400">
+                  {formatTimestamp(chat?.lastMessageTimestamp)}
+                </p>
+              </button>
+            ))
+        )}
       </main>
     </section>
   );
