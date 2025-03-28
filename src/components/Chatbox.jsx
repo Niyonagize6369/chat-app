@@ -6,7 +6,7 @@ const defaultAvatar = "/assets/default.jpg"; // Ensure correct path
 
 const Chatbox = () => {
   const [messages, setMessages] = useState([]); // ✅ Corrected state variable
-
+  const [messageText, setMessageText] = useState("");
   const senderEmail = "baxo@mailinator.com";
 
   useEffect(() => {
@@ -23,6 +23,20 @@ const Chatbox = () => {
       return aTimestamp - bTimestamp;
     });
   }, [messages]); // ✅ Fixed dependency
+
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    const newMessage = {
+      sender: senderEmail,
+      text: messageText,
+      timestamp: {
+        seconds: Math.floor(Date.now() / 1000),
+        nanoseconds: 0,
+      },
+    };
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+    setMessageText("");
+  };
 
   return (
     <section className="flex flex-col h-screen w-full bg-gray-100">
@@ -95,13 +109,22 @@ const Chatbox = () => {
 
       {/* Chat Input */}
       <div className="p-3 bg-white border-t border-gray-300">
-        <form className="flex items-center bg-white h-[45px] w-full px-3 rounded-lg shadow-lg">
+        <form
+          onSubmit={handleSendMessage}
+          action=""
+          className="flex items-center bg-white h-[45px] w-full px-3 rounded-lg shadow-lg"
+        >
           <input
+            value={messageText}
+            onChange={(e) => setMessageText(e.target.value)}
             className="flex-grow text-[#2A3D39] outline-none text-[16px] pl-3 rounded-lg"
             type="text"
             placeholder="Write your message..."
           />
-          <button className="ml-3 p-2 rounded-full bg-[#D0f2ed] hover:bg-[#c8eae3]">
+          <button
+            type="submit"
+            className="ml-3 p-2 rounded-full bg-[#D0f2ed] hover:bg-[#c8eae3]"
+          >
             <RiSendPlaneFill color="#01AA85" size={20} />
           </button>
         </form>
