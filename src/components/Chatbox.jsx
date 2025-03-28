@@ -1,11 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { messageData } from "../data/messageData";
-import { useState } from "react";
+
 const defaultAvatar = "/assets/default.jpg"; // Ensure correct path
 
 const Chatbox = () => {
-  const [message, setMessages] = useState([]);
+  const [messages, setMessages] = useState([]); // ✅ Corrected state variable
+
+  const senderEmail = "baxo@mailinator.com";
+
+  useEffect(() => {
+    setMessages(messageData);
+  }, []);
+
+  const sortedMessages = useMemo(() => {
+    return [...messages].sort((a, b) => {
+      const aTimestamp =
+        (a?.timestamp?.seconds || 0) + (a?.timestamp?.nanoseconds || 0) / 1e9;
+      const bTimestamp =
+        (b?.timestamp?.seconds || 0) + (b?.timestamp?.nanoseconds || 0) / 1e9;
+
+      return aTimestamp - bTimestamp;
+    });
+  }, [messages]); // ✅ Fixed dependency
+
   return (
     <section className="flex flex-col h-screen w-full bg-gray-100">
       {/* Header */}
@@ -19,48 +37,60 @@ const Chatbox = () => {
           <h3 className="font-semibold text-[#2A3D39] text-lg">
             Chatfrik User
           </h3>
-          <p
-            className="font-light text-[#2A3D39]
-           text-sm"
-          >
-            @Chatfrik
-          </p>
+          <p className="font-light text-[#2A3D39] text-sm">@Chatfrik</p>
         </div>
       </header>
 
       {/* Chat Messages */}
       <main className="flex flex-col flex-grow overflow-y-auto p-4 space-y-4">
-        {/* Received Message */}
-        <div className="flex items-start gap-3">
-          <img
-            src={defaultAvatar}
-            className="h-10 w-10 object-cover rounded-full"
-            alt="User Avatar"
-          />
-          <div>
-            <div className="bg-white px-4 py-2 rounded-lg shadow-sm">
-              <h4 className="font-medium text-gray-800">Chatfrik User</h4>
-              <p className="text-gray-600">Hey buddy!</p>
-            </div>
-            <p className="text-gray-400 text-xs mt-1">7th Feb 2025</p>
-          </div>
-        </div>
+        {sortedMessages.map((msg, index) => {
+          // Convert timestamp to a readable date
+          const messageDate = new Date(
+            (msg.timestamp?.seconds || 0) * 1000
+          ).toLocaleString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          });
 
-        {/* Sent Message */}
-        <div className="flex items-end gap-3 justify-end">
-          <div className="text-right">
-            <div className="bg-[#D0f2ed] px-4 py-2 rounded-lg shadow-sm">
-              <h4 className="font-medium text-gray-800">You</h4>
-              <p className="text-gray-600">Hello, how are you?</p>
+          return (
+            <div
+              key={index}
+              className={`flex items-start gap-3 ${
+                msg.sender === senderEmail ? "justify-end" : ""
+              }`}
+            >
+              {msg.sender !== senderEmail && (
+                <img
+                  src={defaultAvatar}
+                  className="h-10 w-10 object-cover rounded-full"
+                  alt="User Avatar"
+                />
+              )}
+              <div
+                className={`${
+                  msg.sender === senderEmail ? "bg-[#D0f2ed]" : "bg-white"
+                } px-4 py-2 rounded-lg shadow-sm`}
+              >
+                <h4 className="font-medium text-gray-800">
+                  {msg.sender === senderEmail ? "You" : "Chatfrik User"}
+                </h4>
+                <p className="text-gray-600">{msg.text}</p>
+                <p className="text-gray-400 text-xs mt-1">{messageDate}</p>{" "}
+                {/* ✅ Display Date */}
+              </div>
+              {msg.sender === senderEmail && (
+                <img
+                  src={defaultAvatar}
+                  className="h-10 w-10 object-cover rounded-full"
+                  alt="User Avatar"
+                />
+              )}
             </div>
-            <p className="text-gray-400 text-xs mt-1">7th Feb 2025</p>
-          </div>
-          <img
-            src={defaultAvatar}
-            className="h-10 w-10 object-cover rounded-full"
-            alt="User Avatar"
-          />
-        </div>
+          );
+        })}
       </main>
 
       {/* Chat Input */}

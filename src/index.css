@@ -20,5 +20,5 @@ body {
   overflow: scroll;
 }
 .custom-scrollbar::-webkit-scrollbar {
-  width: o;
+  width: 0;
 }
