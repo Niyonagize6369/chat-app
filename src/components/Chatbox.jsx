@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { RiSendPlaneFill } from "react-icons/ri";
+import { messageData } from "../data/messageData";
+import { useState } from "react";
 const defaultAvatar = "/assets/default.jpg"; // Ensure correct path
 
 const Chatbox = () => {
+  const [message, setMessages] = useState([]);
   return (
     <section className="flex flex-col h-screen w-full bg-gray-100">
       {/* Header */}
@@ -16,7 +19,12 @@ const Chatbox = () => {
           <h3 className="font-semibold text-[#2A3D39] text-lg">
             Chatfrik User
           </h3>
-          <p className="font-light text-[#2A3D39] text-sm">@Chatfrik</p>
+          <p
+            className="font-light text-[#2A3D39]
+           text-sm"
+          >
+            @Chatfrik
+          </p>
         </div>
       </header>
 
